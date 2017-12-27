@@ -35,11 +35,9 @@ class Checksum
   end
 
   def each_row_diff
-    result = {}
-    each_row_max.each do |k, _|
-      result[k] = each_row_max[k] - each_row_min[k]
+    each_row_max.reduce({}) do |h, (k, _)|
+      h.update(k => each_row_max[k] - each_row_min[k])
     end
-    result
   end
 
   def each_row_max
@@ -52,11 +50,9 @@ class Checksum
 
   private
   def select_rows_by(&block)
-    result = {}
-    rows.each.with_index do |r, i|
-      result[i] = yield(r)
+    rows.each.with_index.reduce({}) do |hash, (row, index)|
+      hash.update(index => yield(row))
     end
-    result
   end
 end
 
