@@ -53,3 +53,5 @@ module SolveCaptcha
     end
   end
 end
+
+puts SolveCaptcha.(File.read("aoc_1_input"))
